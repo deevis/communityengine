@@ -2,6 +2,7 @@ require 'digest/sha1'
 require 'bcrypt'
 
 class User < ActiveRecord::Base
+  extend FriendlyId
   include UrlUpload
   include FacebookProfile
   include TwitterProfile
@@ -10,7 +11,7 @@ class User < ActiveRecord::Base
   rakismet_attrs :author => :login, :comment_type => 'registration', :content => :description, :user_ip => :last_login_ip, :author_email => :email
   attr_protected :admin, :featured, :role_id, :akismet_attrs
       
-  has_friendly_id :login, :use_slug => true, :cache_column => 'login_slug'
+  friendly_id :login, :use => :slugged  #, :cache_column => 'login_slug'   # don't know what this is...commenting with move to friendly_id 4.0.x
   
   MALE    = 'M'
   FEMALE  = 'F'
