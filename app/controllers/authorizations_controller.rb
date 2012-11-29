@@ -1,7 +1,8 @@
 class AuthorizationsController < BaseController
   before_filter :login_required, :only => [:destroy]
-
+    
   def create
+    Kernel.puts "\n\n\n\nHI MOM\n\n\n"
     omniauth = request.env['omniauth.auth'] #this is where you get all the data from your provider through omniauth    
     provider_name = omniauth['provider'].capitalize    
     
@@ -27,6 +28,11 @@ class AuthorizationsController < BaseController
     redirect_to home_url
   end
   
+  def oauth_failure
+    flash[:notice] = t('authorizations.failure.notice')
+    redirect_to login_url
+  end
+
   def destroy
     @authorization = current_user.authorizations.find(params[:id])
 

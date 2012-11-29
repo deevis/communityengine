@@ -45,12 +45,13 @@ class Authorization < ActiveRecord::Base
   end
   
   def assign_account_info(auth_hash)
+    Kernel.puts "\n\n\n\n#{auth_hash}\n\n\n"
     self.uid                 = auth_hash['uid']
     self.provider            = auth_hash['provider']
-    self.nickname            = auth_hash['user_info']['nickname']
-    self.email               = auth_hash['user_info']['email']    
-    self.picture_url         = auth_hash['user_info']['image']
-    self.name                = auth_hash['user_info']['name']
+    self.nickname            = auth_hash['info']['nickname']
+    self.email               = auth_hash['info']['email']    
+    self.picture_url         = auth_hash['info']['image']
+    self.name                = auth_hash['info']['name']
     if auth_hash['credentials']
       self.access_token        = auth_hash['credentials']['token']
       self.access_token_secret = auth_hash['credentials']['secret']
